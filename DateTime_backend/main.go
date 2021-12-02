@@ -1,17 +1,33 @@
 package main
 
 import (
+	"DateTime_backend/route"
+	"DateTime_backend/utils"
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/spf13/viper"
+	"os"
 )
 
 func main() {
+	initConfig()
 	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"msg": "Success",
-		})
-	})
+	r = route.CollectRoutes(r)
+	db := utils.InitDB()
+	defer db.Close()
+	port := viper.GetString("server.port")
 
-	r.Run(":9090")
+	if port != "" {
+		panic(r.Run(":" + port))
+	}
+}
+
+func initConfig()  {
+	 workDir, _ := os.Getwd()
+	 viper.SetConfigName("application")
+	 viper.SetConfigType("yml")
+	 viper.AddConfigPath(workDir + "/config")
+	 err := viper.ReadInConfig()
+	 if err != nil {
+	 	panic(err)
+	 }
 }

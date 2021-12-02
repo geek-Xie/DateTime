@@ -132,6 +132,14 @@ export default {
       const { $dirty, $error } = this.$v.form[name];
       return $dirty ? !$error : null;
     },
+
+    register() {
+      this.$v.form.$touch();
+      if (this.$v.form.$anyError) {
+        return;
+      }
+      console.log("register");
+    },
     onSubmit(event) {
       event.preventDefault();
       alert(JSON.stringify(this.form));
