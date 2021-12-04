@@ -15,7 +15,7 @@ type Claims struct {
 
 func ReleaseToken(user model.User) (string, error)  {
 	expirationTime := time.Now().Add(7 * 24 * time.Hour)
-	claims := Claims{
+	claims := &Claims{
 		UserId:         user.ID,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
@@ -26,10 +26,10 @@ func ReleaseToken(user model.User) (string, error)  {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, error := token.SignedString(jwtKey)
+	tokenString, err := token.SignedString(jwtKey)
 
-	if error != nil {
-		return "", error
+	if err != nil {
+		return "", err
 	}
 
 	return tokenString, nil
