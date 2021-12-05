@@ -11,33 +11,21 @@
             >
               <b-form-input
                 id="input-1"
-                v-model="form.email"
+                v-model="loginForm.email"
                 type="email"
                 placeholder="Enter email address"
                 required
               ></b-form-input>
             </b-form-group>
+
             <b-form-group
               id="input-group-2"
-              label="Your Name:"
+              label="Your Password:"
               label-for="input-2"
             >
               <b-form-input
                 id="input-2"
-                v-model="form.name"
-                placeholder="Enter name"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group
-              id="input-group-3"
-              label="Your Password:"
-              label-for="input-3"
-            >
-              <b-form-input
-                id="input-3"
-                v-model="form.password"
+                v-model="loginForm.password"
                 type="password"
                 placeholder="Enter password"
                 required
@@ -47,7 +35,7 @@
             <!-- <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Reset</b-button> -->
             <br />
-            <b-button variant="outline-primary">Login</b-button>
+            <b-button variant="outline-primary" @click="login">Login</b-button>
           </b-form>
         </b-card>
       </b-col>
@@ -59,29 +47,46 @@
 </template>
 
 <script>
+import { required } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
-      form: {
+      loginForm: {
         email: "",
-        name: "",
         password: "",
       },
       show: true,
     };
   },
+  validations: {
+    loginForm: {
+      email: {
+        required,
+      },
+      password: {
+        required,
+      },
+    },
+  },
   methods: {
+    login() {
+      this.$v.loginForm.$touch();
+      if (this.$v.loginForm.$anyError) {
+        return;
+      }
+      const api = "http://localhost:9090/auth/login";
+      this.axios.post(api, this.loginForm).then((res) => {
+        console.log(res.data);
+      });
+    },
     onSubmit(event) {
       event.preventDefault();
-      alert(JSON.stringify(this.form));
+      alert(JSON.stringify(this.loginForm));
     },
     onReset(event) {
       event.preventDefault();
       // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.food = null;
-      this.form.checked = [];
+      this.loginForm.email = "";
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {

@@ -11,7 +11,7 @@
             >
               <b-form-input
                 id="input-1"
-                v-model="$v.user.email.$model"
+                v-model="$v.registerForm.email.$model"
                 type="email"
                 placeholder="Enter email address"
                 required
@@ -25,7 +25,7 @@
             >
               <b-form-input
                 id="input-2"
-                v-model="$v.user.name.$model"
+                v-model="$v.registerForm.username.$model"
                 placeholder="Enter name"
                 required
               ></b-form-input>
@@ -38,7 +38,7 @@
             >
               <b-form-input
                 id="input-3"
-                v-model="$v.user.phone.$model"
+                v-model="$v.registerForm.phone.$model"
                 placeholder="Enter phone number"
                 required
               ></b-form-input>
@@ -54,7 +54,7 @@
             >
               <b-form-input
                 id="input-3"
-                v-model="$v.user.password.$model"
+                v-model="$v.registerForm.password.$model"
                 type="password"
                 placeholder="Enter password"
                 required
@@ -100,9 +100,9 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
-      user: {
+      registerForm: {
         email: "",
-        name: "",
+        username: "",
         phone: "",
         password: "",
       },
@@ -110,11 +110,11 @@ export default {
     };
   },
   validations: {
-    user: {
+    registerForm: {
       email: {
         required,
       },
-      name: {
+      username: {
         required,
       },
       phone: {
@@ -129,20 +129,20 @@ export default {
   },
   methods: {
     validateState(name) {
-      const { $dirty, $error } = this.$v.user[name];
+      const { $dirty, $error } = this.$v.registerForm[name];
       return $dirty ? !$error : null;
     },
 
     register() {
-      this.$v.user.$touch();
-      if (this.$v.user.$anyError) {
+      this.$v.registerForm.$touch();
+      if (this.$v.registerForm.$anyError) {
         return;
       }
       const api = "http://localhost:9090/auth/register";
       this.axios
-        .post(api, this.user)
+        .post(api, this.registerForm)
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
         })
         .catch((err) => {
           console.log("err", err.response.data.msg);
@@ -150,15 +150,13 @@ export default {
     },
     onSubmit(event) {
       event.preventDefault();
-      alert(JSON.stringify(this.user));
+      alert(JSON.stringify(this.registerForm));
     },
     onReset(event) {
       event.preventDefault();
       // Reset our form values
-      this.user.email = "";
-      this.user.name = "";
-      this.user.food = null;
-      this.user.checked = [];
+      this.registerForm.email = "";
+      this.registerForm.username = "";
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
