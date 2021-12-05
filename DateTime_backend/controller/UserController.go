@@ -4,15 +4,19 @@ import (
 	"DateTime_backend/model"
 	"DateTime_backend/response"
 	"DateTime_backend/utils"
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 func Register(c *gin.Context)  {
-
-	c.JSON(http.StatusOK, gin.H{
-		"message": "register",
-	})
+	var requestMap = make(map[string]string)
+	json.NewDecoder(c.Request.Body).Decode(&requestMap)
+	//email := c.PostForm("email")
+	//username := c.PostForm("username")
+	//phone := c.PostForm("phone")
+	//password := c.PostForm("password")
+	response.Response(c, http.StatusOK, gin.H{"data": requestMap}, "")
 
 }
 

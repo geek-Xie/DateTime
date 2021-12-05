@@ -11,7 +11,7 @@
             >
               <b-form-input
                 id="input-1"
-                v-model="$v.form.email.$model"
+                v-model="$v.user.email.$model"
                 type="email"
                 placeholder="Enter email address"
                 required
@@ -25,7 +25,7 @@
             >
               <b-form-input
                 id="input-2"
-                v-model="$v.form.name.$model"
+                v-model="$v.user.name.$model"
                 placeholder="Enter name"
                 required
               ></b-form-input>
@@ -38,7 +38,7 @@
             >
               <b-form-input
                 id="input-3"
-                v-model="$v.form.phone.$model"
+                v-model="$v.user.phone.$model"
                 placeholder="Enter phone number"
                 required
               ></b-form-input>
@@ -54,7 +54,7 @@
             >
               <b-form-input
                 id="input-3"
-                v-model="$v.form.password.$model"
+                v-model="$v.user.password.$model"
                 type="password"
                 placeholder="Enter password"
                 required
@@ -100,7 +100,7 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
-      form: {
+      user: {
         email: "",
         name: "",
         phone: "",
@@ -110,7 +110,7 @@ export default {
     };
   },
   validations: {
-    form: {
+    user: {
       email: {
         required,
       },
@@ -129,28 +129,36 @@ export default {
   },
   methods: {
     validateState(name) {
-      const { $dirty, $error } = this.$v.form[name];
+      const { $dirty, $error } = this.$v.user[name];
       return $dirty ? !$error : null;
     },
 
     register() {
-      this.$v.form.$touch();
-      if (this.$v.form.$anyError) {
+      this.$v.user.$touch();
+      if (this.$v.user.$anyError) {
         return;
       }
-      console.log("register");
+      const api = "http://localhost:9090/auth/register";
+      this.axios
+        .post(api, this.user)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log("err", err.response.data.msg);
+        });
     },
     onSubmit(event) {
       event.preventDefault();
-      alert(JSON.stringify(this.form));
+      alert(JSON.stringify(this.user));
     },
     onReset(event) {
       event.preventDefault();
       // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.food = null;
-      this.form.checked = [];
+      this.user.email = "";
+      this.user.name = "";
+      this.user.food = null;
+      this.user.checked = [];
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
