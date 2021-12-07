@@ -16,7 +16,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		// 验证token格式
 		if tokenString == "" || !strings.HasPrefix(tokenString, "Bearer ") {
-			response.Response(c, http.StatusUnauthorized, nil, "权限不足")
+			response.Response(c, http.StatusUnauthorized, 400, nil, "权限不足")
 			// 抛弃请求
 			c.Abort()
 			return
@@ -28,7 +28,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		// 解析出的token无效或者有错误
 		if err != nil || !token.Valid {
-			response.Response(c, http.StatusUnauthorized, nil, "权限不足")
+			response.Response(c, http.StatusUnauthorized, 400, nil, "权限不足")
 			c.Abort()
 			return
 		}

@@ -27,13 +27,13 @@ func Register(c *gin.Context) {
 		token, err := utils.ReleaseToken(user)
 
 		if err != nil {
-			response.Response(c, http.StatusInternalServerError, nil, "token发放异常")
+			response.Response(c, http.StatusInternalServerError, 400, nil, "token发放异常")
 			return
 		}
 
-		response.Response(c, http.StatusCreated, gin.H{"user": user, "token": token}, "新用户创建成功")
+		response.Response(c, http.StatusCreated, 200, gin.H{"user": user, "token": token}, "新用户创建成功")
 	} else {
-		response.Response(c, http.StatusOK, nil, "用户已存在")
+		response.Response(c, http.StatusOK, 400, nil, "用户已存在")
 	}
 
 }
@@ -43,15 +43,15 @@ func Login(c *gin.Context) {
 	json.NewDecoder(c.Request.Body).Decode(&requestMap)
 	userExist := server.IsUserExist(requestMap["email"])
 	if !userExist {
-		response.Response(c, http.StatusOK, nil, "当前用户不存在，请先注册用户")
+		response.Response(c, http.StatusOK, 400, nil, "当前用户不存在，请先注册用户")
 	} else {
 		passwordOk := server.CheckPassword(requestMap["email"], requestMap["password"])
 		if passwordOk {
 			user := server.GetUserByEmail(requestMap["email"])
 			token, _ := utils.ReleaseToken(user)
-			response.Response(c, http.StatusOK, gin.H{"token": token}, "登陆成功，发放token")
+			response.Response(c, http.StatusOK, 200, gin.H{"token": token}, "登陆成功，发放token")
 		} else {
-			response.Response(c, http.StatusOK, nil, "密码错误,请重新输入")
+			response.Response(c, http.StatusOK, 400, nil, "密码错误,请重新输入")
 		}
 	}
 
