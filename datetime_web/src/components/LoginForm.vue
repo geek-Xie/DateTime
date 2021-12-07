@@ -74,9 +74,11 @@ export default {
       if (this.$v.loginForm.$anyError) {
         return;
       }
+      let that = this;
       const api = "http://localhost:9090/auth/login";
       this.axios.post(api, this.loginForm).then((res) => {
-        console.log(res.data);
+        console.log(res.data.data["token"]);
+        that.$store.commit("setToken", res.data.data["token"]);
       });
     },
     onSubmit(event) {

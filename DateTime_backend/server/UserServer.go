@@ -14,6 +14,18 @@ func IsUserExist(email string) bool {
 	return true
 }
 
+func GetUserByEmail(email string) model.User {
+	return dao.GetUserByEmail(utils.InitDB(), email)
+}
+
 func CreateNewUser(user model.User)  {
 	dao.AddNewUserToDatabase(utils.InitDB(), user)
+}
+
+func CheckPassword(email string, password string) bool {
+	dbPassword := dao.GetPasswordByEmail(utils.InitDB(), email)
+	if dbPassword != password {
+		return false
+	}
+	return true
 }

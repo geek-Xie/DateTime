@@ -45,7 +45,14 @@ func Login(c *gin.Context) {
 	if !userExist {
 		response.Response(c, http.StatusOK, nil, "当前用户不存在，请先注册用户")
 	} else {
-
+		passwordOk := server.CheckPassword(requestMap["email"], requestMap["password"])
+		if passwordOk {
+			user := server.GetUserByEmail(requestMap["email"])
+			token, _ := utils.ReleaseToken(user)
+			response.Response(c, http.StatusOK, gin.H{"token": token}, "登陆成功，发放token")
+		} else {
+			response.Response(c, http.StatusOK, nil, "密码错误,请重新输入")
+		}
 	}
 
 	//userInfo, _ := c.Get("user")
