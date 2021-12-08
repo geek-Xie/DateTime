@@ -74,11 +74,14 @@ export default {
       if (this.$v.loginForm.$anyError) {
         return;
       }
-      let that = this;
       const api = "http://localhost:9090/auth/login";
       this.axios.post(api, this.loginForm).then((res) => {
-        console.log(res.data.data["token"]);
-        that.$store.commit("setToken", res.data.data["token"]);
+        if (res.data.code == 200) {
+          this.$store.commit("setUserInfo", res.data.data["loginUser"]);
+          console.log("useInfo: ", this.$store.getters.getUserInfo);
+          console.log("userToken: ", this.$store.getters.getUserToken);
+          // this.$router.push("/");
+        }
       });
     },
     onSubmit(event) {

@@ -139,14 +139,12 @@ export default {
         return;
       }
       const api = "http://localhost:9090/auth/register";
-      this.axios
-        .post(api, this.registerForm)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log("err", err.response.data.msg);
-        });
+      this.axios.post(api, this.registerForm).then((res) => {
+        if (res.data.code == 200) {
+          this.$store.commit("setUserInfo", res.data.data["token"]);
+          this.$router.push("/");
+        }
+      });
     },
     onSubmit(event) {
       event.preventDefault();

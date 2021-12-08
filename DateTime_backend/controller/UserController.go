@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"DateTime_backend/dto"
 	"DateTime_backend/model"
 	"DateTime_backend/response"
 	"DateTime_backend/server"
@@ -29,9 +30,15 @@ func Register(c *gin.Context) {
 		if err != nil {
 			response.Response(c, http.StatusInternalServerError, 400, nil, "token发放异常")
 			return
+		} else {
+			loginUser := dto.LoginUser{
+				Email:    user.Email,
+				Username: user.Username,
+				Phone:    user.Phone,
+				Token:    token,
+			}
+			response.Response(c, http.StatusCreated, 200, gin.H{"loginUser": loginUser}, "新用户创建成功")
 		}
-
-		response.Response(c, http.StatusCreated, 200, gin.H{"user": user, "token": token}, "新用户创建成功")
 	} else {
 		response.Response(c, http.StatusOK, 400, nil, "用户已存在")
 	}
@@ -49,7 +56,13 @@ func Login(c *gin.Context) {
 		if passwordOk {
 			user := server.GetUserByEmail(requestMap["email"])
 			token, _ := utils.ReleaseToken(user)
-			response.Response(c, http.StatusOK, 200, gin.H{"token": token}, "登陆成功，发放token")
+			loginUser := dto.LoginUser{
+				Email:    user.Email,
+				Username: user.Username,
+				Phone:    user.Phone,
+				Token:    token,
+			}
+			response.Response(c, http.StatusOK, 200, gin.H{"loginUser": loginUser}, "登陆成功，发放token")
 		} else {
 			response.Response(c, http.StatusOK, 400, nil, "密码错误,请重新输入")
 		}
