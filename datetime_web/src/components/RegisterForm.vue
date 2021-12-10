@@ -141,7 +141,7 @@ export default {
       const api = "http://localhost:9090/auth/register";
       this.axios.post(api, this.registerForm).then((res) => {
         if (res.data.code == 200) {
-          this.$store.commit("setUserInfo", res.data.data["token"]);
+          this.$store.commit("setUserInfo", res.data.data["loginUser"]);
           this.$router.push("/");
         }
       });

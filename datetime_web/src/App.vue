@@ -14,6 +14,14 @@ export default {
   components: {
     Navbar,
   },
+  mounted() {
+    window.addEventListener("unload", this.saveState);
+  },
+  methods: {
+    saveState() {
+      localStorage.setItem("state", JSON.stringify(this.$store.state));
+    },
+  },
 };
 </script>
 

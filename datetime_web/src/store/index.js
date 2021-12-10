@@ -4,7 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
+  state: localStorage.getItem('state') ? JSON.parse(localStorage.getItem('state')) : {
+    isLogin: false,
     userInfo: {
       email: '',
       username: '',
@@ -16,15 +17,13 @@ export default new Vuex.Store({
     setUserInfo(state, user) {
       state.userInfo = user
       localStorage.userInfo = user
+      state.isLogin = true
     }
   },
   getters: {
-    getUserInfo(state) {
-      return state.userInfo
-    },
-    getUserToken(state) {
-      return state.userInfo['Token']
-    }
+    getLogin: state => state.isLogin,
+    getUserInfo: state => state.userInfo,
+    getUserToken: state => state.userInfo['Token'],
   },
 
   actions: {

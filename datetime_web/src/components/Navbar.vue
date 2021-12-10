@@ -2,7 +2,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info" fixed="top">
       <b-container>
-        <b-navbar-brand href="#">DateTime</b-navbar-brand>
+        <b-navbar-brand href="/">DateTime</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

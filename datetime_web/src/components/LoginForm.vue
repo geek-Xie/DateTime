@@ -78,9 +78,7 @@ export default {
       this.axios.post(api, this.loginForm).then((res) => {
         if (res.data.code == 200) {
           this.$store.commit("setUserInfo", res.data.data["loginUser"]);
-          console.log("useInfo: ", this.$store.getters.getUserInfo);
-          console.log("userToken: ", this.$store.getters.getUserToken);
-          // this.$router.push("/");
+          this.$router.push("/");
         }
       });
     },

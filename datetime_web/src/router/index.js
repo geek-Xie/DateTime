@@ -21,11 +21,12 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: LoginForm
-  }
+  },
 ]
 
 const router = new VueRouter({
   routes
 })
+
 
 export default router
