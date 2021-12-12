@@ -46,8 +46,13 @@
             <b-nav-item @click="$router.replace({ name: 'Register' })"
               >Register</b-nav-item
             >
-            <b-nav-item @click="$router.replace({ name: 'Login' })"
+            <b-nav-item
+              v-if="!this.isLogin()"
+              @click="$router.replace({ name: 'Login' })"
               >Login</b-nav-item
+            >
+            <b-nav-item v-if="this.isLogin()" @click="logout"
+              >Logout</b-nav-item
             >
           </b-navbar-nav>
         </b-collapse>
@@ -57,7 +62,22 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    isLogin() {
+      return this.$store.getters.getLogin;
+    },
+    logout() {
+      localStorage.removeItem("userinfo");
+      if (localStorage.getItem("userInfo") === null) {
+        console.log("localstorage成功删除");
+      } else {
+        console.log("localstorage存在");
+      }
+      this.$router.replace({ name: "Login" });
+    },
+  },
+};
 </script>
 
 <style>

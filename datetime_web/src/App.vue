@@ -14,8 +14,16 @@ export default {
   components: {
     Navbar,
   },
-  mounted() {
-    window.addEventListener("unload", this.saveState);
+  created() {
+    // window.addEventListener("unload", this.saveState);
+    if (localStorage.getItem("userInfo") === null) {
+      // this.$store.commit.setLogin();
+      this.$store.commit("setLogin", false);
+      console.log("userInfo doesn't exist!!");
+    } else {
+      this.$store.commit("setLogin", true);
+      console.log("userInfo exist!!");
+    }
   },
   methods: {
     saveState() {
