@@ -68,7 +68,7 @@ export default {
       return this.$store.getters.getLogin;
     },
     logout() {
-      localStorage.removeItem("userinfo");
+      window.localStorage.clear();
       if (localStorage.getItem("userInfo") === null) {
         console.log("localstorage成功删除");
       } else {

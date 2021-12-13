@@ -19,10 +19,10 @@ export default {
     if (localStorage.getItem("userInfo") === null) {
       // this.$store.commit.setLogin();
       this.$store.commit("setLogin", false);
-      console.log("userInfo doesn't exist!!");
+      console.log("isLogin", this.$store.getters.getLogin);
     } else {
       this.$store.commit("setLogin", true);
-      console.log("userInfo exist!!");
+      console.log("isLogin", this.$store.getters.getLogin);
     }
   },
   methods: {

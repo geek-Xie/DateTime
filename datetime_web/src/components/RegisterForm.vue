@@ -82,7 +82,10 @@
         </b-form-group> -->
             <br />
 
-            <b-button variant="outline-primary" @click="register"
+            <b-button
+              variant="outline-primary"
+              @click="register"
+              @keyup.enter="enterregister"
               >Register</b-button
             >
           </b-form>
@@ -127,6 +130,9 @@ export default {
       },
     },
   },
+  created() {
+    this.enterregister();
+  },
   methods: {
     validateState(name) {
       const { $dirty, $error } = this.$v.registerForm[name];
@@ -145,6 +151,13 @@ export default {
           this.$router.push("/");
         }
       });
+    },
+    enterregister() {
+      document.onkeydown = (e) => {
+        if (e.keyCode == 13) {
+          this.register();
+        }
+      };
     },
     onSubmit(event) {
       event.preventDefault();

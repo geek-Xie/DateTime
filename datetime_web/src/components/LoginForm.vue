@@ -35,7 +35,12 @@
             <!-- <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Reset</b-button> -->
             <br />
-            <b-button variant="outline-primary" @click="login">Login</b-button>
+            <b-button
+              variant="outline-primary"
+              @click="login"
+              @keyup.enter="enterlogin"
+              >Login</b-button
+            >
           </b-form>
         </b-card>
       </b-col>
@@ -68,6 +73,9 @@ export default {
       },
     },
   },
+  created() {
+    this.enterlogin();
+  },
   methods: {
     login() {
       this.$v.loginForm.$touch();
@@ -81,6 +89,14 @@ export default {
           this.$router.push("/");
         }
       });
+    },
+    enterlogin() {
+      console.log("暗下来了");
+      document.onkeydown = (e) => {
+        if (e.keyCode == 13) {
+          this.login();
+        }
+      };
     },
     onSubmit(event) {
       event.preventDefault();
