@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import RegisterForm from '../components/RegisterForm.vue'
-import LoginForm from '../components/LoginForm.vue'
+import RegisterForm from '../components/auth/RegisterForm.vue'
+import LoginForm from '../components/auth/LoginForm.vue'
 
 Vue.use(VueRouter)
 

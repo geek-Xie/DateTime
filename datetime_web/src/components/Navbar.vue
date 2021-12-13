@@ -7,10 +7,10 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav>
+          <!-- <b-navbar-nav>
             <b-nav-item href="#">Link</b-nav-item>
             <b-nav-item href="#" disabled>Disabled</b-nav-item>
-          </b-navbar-nav>
+          </b-navbar-nav> -->
 
           <!-- Right aligned nav items -->
 
@@ -43,7 +43,9 @@
               <b-dropdown-item href="#">Profile</b-dropdown-item>
               <b-dropdown-item href="#">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown> -->
-            <b-nav-item @click="$router.replace({ name: 'Register' })"
+            <b-nav-item
+              v-if="!this.isLogin()"
+              @click="$router.replace({ name: 'Register' })"
               >Register</b-nav-item
             >
             <b-nav-item
@@ -51,6 +53,7 @@
               @click="$router.replace({ name: 'Login' })"
               >Login</b-nav-item
             >
+            <b-nav-item v-if="this.isLogin()">Personal Console</b-nav-item>
             <b-nav-item v-if="this.isLogin()" @click="logout"
               >Logout</b-nav-item
             >
@@ -75,6 +78,7 @@ export default {
         console.log("localstorage存在");
       }
       this.$router.replace({ name: "Login" });
+      this.$router.go(0);
     },
   },
 };

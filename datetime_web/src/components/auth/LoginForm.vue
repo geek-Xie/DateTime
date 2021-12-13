@@ -35,6 +35,14 @@
             <!-- <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Reset</b-button> -->
             <br />
+
+            <b-alert v-if="loginerror" show variant="primary">{{
+              this.alertText
+            }}</b-alert>
+            <!-- <b-button @click="showAlert" variant="info" class="m-1">
+              Show alert with count-down timer
+            </b-button> -->
+
             <b-button
               variant="outline-primary"
               @click="login"
@@ -61,6 +69,8 @@ export default {
         password: "",
       },
       show: true,
+      loginerror: false,
+      alertText: "",
     };
   },
   validations: {
@@ -77,6 +87,12 @@ export default {
     this.enterlogin();
   },
   methods: {
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs;
+    },
     login() {
       this.$v.loginForm.$touch();
       if (this.$v.loginForm.$anyError) {
@@ -87,11 +103,14 @@ export default {
         if (res.data.code == 200) {
           this.$store.commit("setUserInfo", res.data.data["loginUser"]);
           this.$router.push("/");
+        } else if (res.data.code == 400) {
+          this.alertText = res.data.msg;
+          this.loginerror = true;
+          this.$router.go(0);
         }
       });
     },
     enterlogin() {
-      console.log("暗下来了");
       document.onkeydown = (e) => {
         if (e.keyCode == 13) {
           this.login();

@@ -81,6 +81,9 @@
           </b-form-checkbox-group>
         </b-form-group> -->
             <br />
+            <b-alert v-if="registererror" show variant="primary">{{
+              this.alertText
+            }}</b-alert>
 
             <b-button
               variant="outline-primary"
@@ -110,6 +113,8 @@ export default {
         password: "",
       },
       show: true,
+      alertText: "",
+      registererror: false,
     };
   },
   validations: {
@@ -149,6 +154,10 @@ export default {
         if (res.data.code == 200) {
           this.$store.commit("setUserInfo", res.data.data["loginUser"]);
           this.$router.push("/");
+        } else if (res.data.code == 400) {
+          this.alertText = res.data.msg;
+          this.registererror = true;
+          this.this.$router.go(0);
         }
       });
     },
