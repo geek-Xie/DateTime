@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="info" fixed="top">
+    <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top">
       <b-container>
         <b-navbar-brand href="/">DateTime</b-navbar-brand>
 
@@ -53,7 +53,11 @@
               @click="$router.replace({ name: 'Login' })"
               >Login</b-nav-item
             >
-            <b-nav-item v-if="this.isLogin()">Personal Console</b-nav-item>
+            <b-nav-item
+              v-if="this.isLogin()"
+              @click="$router.replace({ name: 'Console' })"
+              >Personal Console</b-nav-item
+            >
             <b-nav-item v-if="this.isLogin()" @click="logout"
               >Logout</b-nav-item
             >

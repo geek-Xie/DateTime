@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <Navbar />
+    <br />
+    <br />
+    <br />
+    <br />
     <router-view></router-view>
   </div>
 </template>
@@ -22,6 +26,22 @@ export default {
       console.log("isLogin", this.$store.getters.getLogin);
     } else {
       this.$store.commit("setLogin", true);
+      this.$store.commit(
+        "setEmail",
+        JSON.parse(localStorage.getItem("userInfo"))["Email"]
+      );
+      this.$store.commit(
+        "setUsername",
+        JSON.parse(localStorage.getItem("userInfo"))["Username"]
+      );
+      this.$store.commit(
+        "setPhone",
+        JSON.parse(localStorage.getItem("userInfo"))["Phone"]
+      );
+      this.$store.commit(
+        "setToken",
+        JSON.parse(localStorage.getItem("userInfo"))["Token"]
+      );
       console.log("isLogin", this.$store.getters.getLogin);
     }
   },

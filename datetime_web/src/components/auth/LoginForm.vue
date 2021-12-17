@@ -101,9 +101,11 @@ export default {
       const api = "http://localhost:9090/auth/login";
       this.axios.post(api, this.loginForm).then((res) => {
         if (res.data.code == 200) {
+          console.log(res.data.msg);
           this.$store.commit("setUserInfo", res.data.data["loginUser"]);
           this.$router.push("/");
         } else if (res.data.code == 400) {
+          console.log(res.data.msg);
           this.alertText = res.data.msg;
           this.loginerror = true;
           this.$router.go(0);

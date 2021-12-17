@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import RegisterForm from '../components/auth/RegisterForm.vue'
 import LoginForm from '../components/auth/LoginForm.vue'
+import Console from '../components/Console.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,11 @@ const routes = [
     name: 'Login',
     component: LoginForm
   },
+  {
+    path: '/console',
+    name: 'Console',
+    component: Console
+  }
 ]
 
 const router = new VueRouter({

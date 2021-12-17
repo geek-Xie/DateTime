@@ -1,17 +1,21 @@
 <template>
   <div>
-    <h1 v-if="this.$store.getters.getLogin">这是Home， 您已登陆</h1>
-    <h1 v-if="!this.$store.getters.getLogin">这是Home， 您未登陆</h1>
-    <h1>这是Home</h1>
+    <Calendar></Calendar>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 // import RegisterForm from "@/components/RegisterForm.vue";
+import Calendar from "@/components/Calendar.vue";
 
 export default {
   name: "Home",
-  components: {},
+  components: { Calendar },
+  created() {
+    if (!this.$store.getters.getLogin) {
+      this.$router.push("/login");
+    }
+  },
 };
 </script>

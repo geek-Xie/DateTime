@@ -17,8 +17,20 @@ export default new Vuex.Store({
   mutations: {
     setUserInfo(state, user) {
       state.userInfo = user
-      localStorage.userInfo = user
+      localStorage.setItem('userInfo', JSON.stringify(user))
       state.isLogin = true
+    },
+    setEmail(state, email) {
+      state.userInfo.email = email
+    },
+    setUsername(state, username) {
+      state.userInfo.username = username
+    },
+    setPhone(state, phone) {
+      state.userInfo.phone = phone
+    },
+    setToken(state, token) {
+      state.userInfo.token = token
     },
     setLogin(state, status) {
       state.isLogin = status
