@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import RegisterForm from '../components/auth/RegisterForm.vue'
 import LoginForm from '../components/auth/LoginForm.vue'
 import Console from '../components/Console.vue'
+import EventItems from '../components/EventItems.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/console',
     name: 'Console',
     component: Console
+  },
+  {
+    path: '/eventitem',
+    name: 'EventItems',
+    component: EventItems
   }
 ]
 

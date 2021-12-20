@@ -17,6 +17,7 @@ export default {
       value: "",
       context: null,
       userInfo: JSON.parse(localStorage.getItem("userInfo"))["Email"],
+      isFirstTime: false,
     };
   },
   methods: {
@@ -27,11 +28,18 @@ export default {
         activeYMD: this.context["activeYMD"],
         userEmail: this.userInfo,
       };
-      console.log("CtxInfo", CtxInfo);
-      // console.log(this.context["activeYMD"]);
-
       this.axios.post(this.api, CtxInfo).then((res) => {
-        console.log("res", res);
+        if (this.isFirstTime) {
+          if (res.data.code == 200) {
+            this.$router.push({
+              path: "/eventitem",
+              query: { data: res.data.data },
+            });
+          } else {
+            console.log(res.data.msg);
+          }
+        }
+        this.isFirstTime = true;
       });
     },
   },
