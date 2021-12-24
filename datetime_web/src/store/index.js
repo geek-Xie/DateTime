@@ -7,6 +7,7 @@ export default new Vuex.Store({
   // state: localStorage.getItem('state') ? JSON.parse(localStorage.getItem('state')) : {
   state: {
     isLogin: false,
+    showDataTable: false,
     userInfo: {
       email: '',
       username: '',
@@ -34,12 +35,17 @@ export default new Vuex.Store({
     },
     setLogin(state, status) {
       state.isLogin = status
-    }
+    },
+    setDataTable(state, showDataTable) {
+      state.showDataTable = showDataTable
+      localStorage.setItem('showDataTable', showDataTable)
+    },
   },
   getters: {
     getLogin: state => state.isLogin,
     getUserInfo: state => state.userInfo,
     getUserToken: state => state.userInfo['Token'],
+    getDataTable: status => status.showDataTable
   },
 
   actions: {
