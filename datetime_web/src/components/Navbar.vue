@@ -43,6 +43,7 @@
               <b-dropdown-item href="#">Profile</b-dropdown-item>
               <b-dropdown-item href="#">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown> -->
+            <b-nav-item @click="$router.push('/')">Home Page</b-nav-item>
             <b-nav-item
               v-if="!this.isLogin()"
               @click="$router.replace({ name: 'Register' })"

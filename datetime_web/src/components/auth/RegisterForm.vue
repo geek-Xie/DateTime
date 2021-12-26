@@ -86,7 +86,7 @@
             }}</b-alert>
 
             <b-button
-              variant="outline-primary"
+              variant="outline-secondary"
               @click="register"
               @keyup.enter="enterregister"
               >Register</b-button

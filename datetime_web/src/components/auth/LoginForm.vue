@@ -44,7 +44,7 @@
             </b-button> -->
 
             <b-button
-              variant="outline-primary"
+              variant="outline-secondary"
               @click="login"
               @keyup.enter="enterlogin"
               >Login</b-button

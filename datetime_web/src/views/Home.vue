@@ -1,6 +1,9 @@
 <template>
   <div>
     <Calendar></Calendar>
+    <b-button @click="createItem" variant="outline-secondary"
+      >Create Item</b-button
+    >
   </div>
 </template>
 
@@ -16,6 +19,12 @@ export default {
     if (!this.$store.getters.getLogin) {
       this.$router.push("/login");
     }
+  },
+  methods: {
+    createItem() {
+      this.$router.push("/createItem");
+      console.log("createItem");
+    },
   },
 };
 </script>
