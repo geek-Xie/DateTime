@@ -12,6 +12,7 @@ func CollectRoutes(r *gin.Engine) *gin.Engine {
 	//r.POST("/auth/login", middleware.AuthMiddleware(), controller.Login)
 	r.POST("/auth/login", controller.Login)
 	r.POST("/console", controller.Console)
+	r.POST("/createEvent", controller.CreateEvent)
 
 	return r
 }
