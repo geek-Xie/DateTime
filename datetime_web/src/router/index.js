@@ -5,7 +5,7 @@ import RegisterForm from '../components/auth/RegisterForm.vue'
 import LoginForm from '../components/auth/LoginForm.vue'
 import Console from '../components/Console.vue'
 import EventItems from '../components/EventItems.vue'
-import CreateItem from '../components/CreateItem.vue'
+import CreateEvent from '../components/CreateEvent.vue'
 
 Vue.use(VueRouter)
 
@@ -36,9 +36,9 @@ const routes = [
     component: EventItems
   },
   {
-    path: '/createItem',
-    name: 'CreateItem',
-    component: CreateItem
+    path: '/createEvent',
+    name: 'CreateEvent',
+    component: CreateEvent
   }
 ]
 

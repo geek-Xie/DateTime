@@ -65,7 +65,12 @@ export default {
         "Email"
       ];
       this.axios.post(api, JSON.stringify(this.newEvent)).then((res) => {
-        console.log(res);
+        if (res.data.code == 200) {
+          console.log(res.data.msg);
+          this.$router.push("/");
+        } else {
+          console.log(res.data.msg);
+        }
       });
     },
     back() {

@@ -1,8 +1,8 @@
 <template>
   <div>
     <Calendar></Calendar>
-    <b-button @click="createItem" variant="outline-secondary"
-      >Create Item</b-button
+    <b-button @click="createEvent" variant="outline-secondary"
+      >Create Event</b-button
     >
   </div>
 </template>
@@ -21,9 +21,9 @@ export default {
     }
   },
   methods: {
-    createItem() {
-      this.$router.push("/createItem");
-      console.log("createItem");
+    createEvent() {
+      this.$router.push("/createEvent");
+      console.log("createEvent");
     },
   },
 };

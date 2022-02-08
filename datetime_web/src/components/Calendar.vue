@@ -13,26 +13,55 @@ export default {
   data() {
     return {
       // Note `isActive` is left out and will not appear in the rendered table
-      fields: ["first_name", "last_name", "age", "Address"],
-      items: [
-        {
-          isActive: true,
-          age: 40,
-          first_name: "Dickerson",
-          last_name: "Macdonald",
-          Address: "123",
-        },
-        {
-          isActive: false,
-          age: 21,
-          first_name: "Larsen",
-          last_name: "Shaw",
-          Address: "11111",
-        },
-        { isActive: false, age: 89, first_name: "Geneva", last_name: "Wilson" },
-        { isActive: true, age: 38, first_name: "Jami", last_name: "Carney" },
-      ],
+      fields: ["Title", "Description", "Start_Date", "Start_Time", "L_T"],
+      item: {
+        Title: "",
+        Describtion: "",
+        Start_Date: "",
+        Start_Time: "",
+        L_T: "",
+      },
+      items: [],
     };
+  },
+  methods: {
+    getEvents() {
+      let api = "http://localhost:9090/getEvents";
+      let useremail = {
+        useremail: "",
+      };
+      // let useremail = JSON.parse(localStorage.getItem("userInfo"))["Email"];
+      useremail.useremail = JSON.parse(localStorage.getItem("userInfo"))[
+        "Email"
+      ];
+      this.axios.post(api, JSON.stringify(useremail)).then((res) => {
+        for (var i = 0; i < res.data.data["events"].length; i++) {
+          let item = {
+            Title: res.data.data["events"][i]["Title"],
+            Description: res.data.data["events"][i]["Description"],
+            Start_Date: res.data.data["events"][i]["StartDate"],
+            Start_Time: res.data.data["events"][i]["StartTime"],
+            L_T: res.data.data["events"][i]["Description"],
+          };
+          this.items[i] = item;
+        }
+        localStorage.setItem("events", JSON.stringify(this.items));
+      });
+    },
+  },
+  created() {
+    this.getEvents();
+    var events = JSON.parse(localStorage.getItem("events"));
+    for (var i = 0; i < events.length; i++) {
+      let item = {
+        Title: events[i]["Title"],
+        Description: events[i]["Description"],
+        Start_Date: events[i]["Start_Date"],
+        Start_Time: events[i]["Start_Time"],
+        L_T: events[i]["Description"],
+      };
+      this.items[i] = item;
+    }
   },
 };
 </script>

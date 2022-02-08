@@ -13,6 +13,7 @@ func CollectRoutes(r *gin.Engine) *gin.Engine {
 	r.POST("/auth/login", controller.Login)
 	r.POST("/console", controller.Console)
 	r.POST("/createEvent", controller.CreateEvent)
+	r.POST("/getEvents", controller.GetEvents)
 
 	return r
 }

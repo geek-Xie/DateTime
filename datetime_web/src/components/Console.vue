@@ -64,10 +64,6 @@ export default {
       this.axios.post(this.api, CtxInfo).then((res) => {
         if (this.isFirstTime) {
           if (res.data.code == 200) {
-            // this.$router.push({
-            //   path: "/eventitem",
-            //   query: { data: res.data.data },
-            // });
             for (var i = 0; i < res.data.data["eventItems"].length; i++) {
               let item = {
                 Title: res.data.data["eventItems"][i]["Title"],
@@ -78,6 +74,7 @@ export default {
               };
               this.items[i] = item;
             }
+            console.log(33, this.items);
             this.showDateTable = true;
             this.$store.commit("setDataTable", this.showDateTable);
             localStorage.setItem("items", JSON.stringify(this.items));
